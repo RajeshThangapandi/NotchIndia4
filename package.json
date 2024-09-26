@@ -6,14 +6,14 @@
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.1",
-<<<<<<< HEAD
+
     "@mui/material": "^6.1.1",
-=======
+
      "@mui/material": "^5.0.0",
     "@mui/icons-material": "^5.0.0",
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0"
->>>>>>> d912c41e0d05006d5cfab7da92f8fa5e022babeb
+
     "@testing-library/jest-dom": "^5.16.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
