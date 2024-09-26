@@ -29,8 +29,11 @@ const CardContainer = tw.div`mt-10 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 sm:pr-10 md
 const Card = tw(motion.a)`bg-gray-200 rounded-b block max-w-xs mx-auto sm:max-w-none sm:mx-0`;
 const CardImageContainer = styled.div`
   ${props => css`background-image: url("${props.imageSrc}");`}
-  ${tw`h-56 xl:h-64 bg-center bg-cover relative rounded-t`}
+  ${tw`bg-center bg-cover relative rounded-t mx-auto`}
+  width: 144px; /* 36 * 4 = 144px */
+  height: 144px; /* 36 * 4 = 144px */
 `;
+
 
 const CardHoverOverlay = styled(motion.div)`
   background-color: rgba(255, 255, 255, 0.5);
@@ -58,7 +61,7 @@ export default ({
       {
         project_id: 5,
         imageSrc:
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/TamilNadu_Logo.svg/1200px-TamilNadu_Logo.svg.png",
+            "https://s3.ap-south-1.amazonaws.com/media.thesouthfirst.com/wp-content/uploads/2024/07/Tamil-Nadu-government-logo.jpg",
         title: "Construction of Vaigai River North Bank Road",
         location: "Namakkal - Karur Toll Road, Tamil Nadu",
         client: "Tamil Nadu Highways Department ",
@@ -88,7 +91,7 @@ export default ({
       {
         project_id: 5,
         imageSrc:
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/TamilNadu_Logo.svg/1200px-TamilNadu_Logo.svg.png",
+            "https://s3.ap-south-1.amazonaws.com/media.thesouthfirst.com/wp-content/uploads/2024/07/Tamil-Nadu-government-logo.jpg",
         title: "Construction of Grade Separator.",
         location: "Namakkal - Karur Toll Road, Tamil Nadu",
         client: "Tamil Nadu Highways Department",
@@ -112,7 +115,7 @@ export default ({
     },
       {
         imageSrc:
-          "https://img.etimg.com/thumb/msid-80453778,width-300,height-225,imgsize-32797,resizemode-75/reliance-infra-1.jpg",
+          "https://images.jdmagicbox.com/comp/kolkata/83/033p400883/catalogue/reliance-infrastructure-ltd-circus-avenue-kolkata-estate-agents-aimner8zst-250.jpg",
         title: "Construction of Widening of Two Lane to Four Lane bypasses",
         client: "Reliance Infrastructure Limited",
         content: "Reliance Infrastructure Limited BOT Concessionaire Supervision of PD NHAI, PIU – Salem",
@@ -145,7 +148,7 @@ export default ({
     Signature:  [
       {
           project_id: 1,
-          imageSrc:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/TamilNadu_Logo.svg/440px-TamilNadu_Logo.svg.png",
+          imageSrc:"https://s3.ap-south-1.amazonaws.com/media.thesouthfirst.com/wp-content/uploads/2024/07/Tamil-Nadu-government-logo.jpg",
           title: "Widening from Two Lane to Four Lane and Improvements",
           location: "Tambaram - Mudichur - Sriperumbudur Road",
           client: "Tamil Nadu Highways Department",
@@ -155,7 +158,7 @@ export default ({
       {
           project_id: 2,
           imageSrc:
-          "https://img.etimg.com/thumb/msid-80453778,width-300,height-225,imgsize-32797,resizemode-75/reliance-infra-1.jpg",
+          "https://images.jdmagicbox.com/comp/kolkata/83/033p400883/catalogue/reliance-infrastructure-ltd-circus-avenue-kolkata-estate-agents-aimner8zst-250.jpg",
           title: "Construction of Widening of Two Lane to Four Lane bypasses",
           location: "Salem – Ulundurpet Section",
           client: "Reliance Infrastructure Limited",
@@ -164,7 +167,7 @@ export default ({
       },
       {
           project_id: 3,
-          imageSrc:"https://www.Notchindiaprojectsprojects.com/images/client-logo/609a29c3486f0w2.jpg",
+          imageSrc:"https://i0.wp.com/complainthub.org/wp-content/uploads/2024/03/Corporation-of-Madurai-Logo.png?fit=720%2C480&ssl=1",
           title: "Renewal proposal for Nagapattinam – Gudalur – Mysore Road",
           location: "NH 67 (New No: 83)",
           client: "MORTH National Highways Madurai Circle",
@@ -173,7 +176,7 @@ export default ({
       {
           project_id: 4,
           imageSrc:
-          "https://img.etimg.com/thumb/msid-80453778,width-300,height-225,imgsize-32797,resizemode-75/reliance-infra-1.jpg",
+          "https://images.jdmagicbox.com/comp/kolkata/83/033p400883/catalogue/reliance-infrastructure-ltd-circus-avenue-kolkata-estate-agents-aimner8zst-250.jpg",
           title: "Periodic maintenance along the Trichy Karur Toll Road",
           location: "Trichy Karur Toll Road, Tamil Nadu",
           client: "Reliance Infrastructure Limited",

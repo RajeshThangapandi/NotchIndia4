@@ -7,6 +7,7 @@ import ContactUsForm from "components/forms/SimpleContactUs.js";
 import Footer from "components/footers/SimpleFiveColumn.js";
 import ProfileThreeColGrid from "components/cards/ProfileThreeColGrid";
 import tw from "twin.macro";
+import MainFeature from "../components/features/TwoColWithButton.js";
 import MainFeature2 from "../components/features/TwoColSingleFeatureWithStats2.js";
 import sampleVideo from '../images/video.mp4'; // Import your video file here
 import ThreeColCenteredStatsPrimaryBackground from "components/features/ThreeColCenteredStatsPrimaryBackground";
@@ -26,6 +27,7 @@ const StyledVideo = styled.video`
 const VideoContainer = styled.div`
   ${tw`flex justify-center mt-12`} // Flexbox for centering and margin-top for gap
 `;
+const Description = tw.span`inline-block mt-8`;
 
 export default () => (
   <AnimationRevealPage>
@@ -37,6 +39,33 @@ export default () => (
       </StyledVideo>
     </VideoContainer>
     <TrendingCard />
+    <MainFeature
+        subheading={<Subheading>Established Since 2014</Subheading>}
+        heading={
+          <>
+            We've been serving for
+            <wbr /> <HighlightedText>over 25 years.</HighlightedText>
+          </>
+        }
+        description={
+          <Description>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua.
+            <br />
+            <br />
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </Description>
+        }
+        buttonRounded={false}
+        textOnLeft={false}
+        primaryButtonText="Latest Offers"
+        imageSrc={
+          "https://images.unsplash.com/photo-1460306855393-0410f61241c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"
+        }
+        imageCss={imageCss}
+        imageDecoratorBlob={true}
+        imageDecoratorBlobCss={tw`left-1/2 -translate-x-1/2 md:w-32 md:h-32 opacity-25`}
+      /> 
     <TabCardGrid
       heading={
         <>
@@ -71,7 +100,9 @@ export default () => (
       imageDecoratorBlobCss={tw`left-1/2 md:w-32 md:h-32 -translate-x-1/2 opacity-25`}
       textOnLeft={true}
     />
+  
     <ProfileThreeColGrid />
+   
     <ThreeColCenteredStatsPrimaryBackground />
     <ContactUsForm />
     <Footer />

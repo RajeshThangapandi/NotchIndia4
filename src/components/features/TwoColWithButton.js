@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useRef } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
-import { css } from "styled-components/macro"; //eslint-disable-line
-import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
-import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
-import TeamIllustrationSrc from "images/team-illustration-2.svg";
-import {ReactComponent as SvgDotPattern } from "images/dot-pattern.svg"
+import Slider from "react-slick";
+import { SectionHeading, Subheading as SubheadingBase } from "../../components/misc/Headings.js";
+import { PrimaryButton as PrimaryButtonBase } from "../../components/misc/Buttons.js";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+
+import image1 from "../../images/1.png"
+
+import image2 from "../../images/2.png"
+
+import image3 from "../../images/3.png"
+
+import image4 from "../../images/4.png"
 
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24 items-center`;
@@ -16,22 +24,19 @@ const TextColumn = styled(Column)(props => [
   props.textOnLeft ? tw`md:mr-12 lg:mr-16 md:order-first` : tw`md:ml-12 lg:ml-16 md:order-last`
 ]);
 
+// Ensure consistent image size
 const Image = styled.img(props => [
+  tw`w-full h-64`,  // Fixed height
   props.imageRounded && tw`rounded`,
   props.imageBorder && tw`border`,
   props.imageShadow && tw`shadow`,
+  `object-fit: cover;`,  // Ensures image covers container while keeping its aspect ratio
+  `object-position: center;`  // Ensures the image is centered
 ]);
 
-const DecoratorBlob = styled(SvgDotPattern)(props => [
-  tw`w-20 h-20 absolute right-0 bottom-0 transform translate-x-1/2 translate-y-1/2 fill-current text-primary-500 -z-10`,
-])
-
 const TextContent = tw.div`lg:py-8 text-center md:text-left`;
-
 const Subheading = tw(SubheadingBase)`text-center md:text-left`;
-const Heading = tw(
-  SectionHeading
-)`mt-4 font-black text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
+const Heading = tw(SectionHeading)`mt-4 font-black text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
 const Description = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-secondary-100`;
 
 const PrimaryButton = styled(PrimaryButtonBase)(props => [
@@ -39,6 +44,48 @@ const PrimaryButton = styled(PrimaryButtonBase)(props => [
   props.buttonRounded && tw`rounded-full`
 ]);
 
+const CarouselContainer = styled(Slider)`
+  ${tw`w-full`};
+
+  .slick-slide {
+    padding: 0 10px;
+  }
+
+  .slick-list {
+    margin: 0 -10px;
+  }
+
+  .slick-dots {
+    bottom: -35px;
+  }
+
+  img {
+    ${tw`w-full h-auto`}
+  }
+`;
+
+const ControlButton = styled.button`
+  ${tw`absolute top-1/2 transform -translate-y-1/2 bg-white text-primary-500 rounded-full p-3 shadow-lg transition-all duration-300`}
+  z-index: 10;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+
+  &.left {
+    left: 10px;
+  }
+
+  &.right {
+    right: 10px;
+  }
+
+  &:hover {
+    ${tw`bg-primary-500 text-white shadow-2xl`}
+    transform: scale(1.1);
+  }
+`;
 
 export default ({
   subheading = "Our Expertise",
@@ -47,27 +94,65 @@ export default ({
       Designed & Developed by <span tw="text-primary-500">Professionals.</span>
     </>
   ),
-  description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+  description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   primaryButtonText = "Learn More",
   primaryButtonUrl = "https://timerse.com",
-  imageSrc = TeamIllustrationSrc,
+  imageSrcs = [
+   image1,
+   image2,image3,image4
+
+  ],
   buttonRounded = true,
   imageRounded = true,
   imageBorder = false,
   imageShadow = false,
-  imageCss = null,
   imageDecoratorBlob = false,
   imageDecoratorBlobCss = null,
   textOnLeft = true
 }) => {
-  // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
+  const carouselRef = useRef(null);
+
+  const carouselSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+  };
+
+  const nextSlide = () => {
+    carouselRef.current.slickNext();
+  };
+
+  const prevSlide = () => {
+    carouselRef.current.slickPrev();
+  };
 
   return (
     <Container>
       <TwoColumn>
         <ImageColumn>
-          <Image css={imageCss} src={imageSrc} imageBorder={imageBorder} imageShadow={imageShadow} imageRounded={imageRounded}/>
-          {imageDecoratorBlob && <DecoratorBlob css={imageDecoratorBlobCss} />}
+          <CarouselContainer ref={carouselRef} {...carouselSettings}>
+            {imageSrcs.map((src, index) => (
+              <Image
+                key={index}
+                src={src}
+                alt={`Carousel Image ${index + 1}`}
+                imageBorder={imageBorder}
+                imageShadow={imageShadow}
+                imageRounded={imageRounded}
+              />
+            ))}
+          </CarouselContainer>
+          
+          <ControlButton className="left" onClick={prevSlide}>
+            <ArrowBackIcon />
+          </ControlButton>
+          <ControlButton className="right" onClick={nextSlide}>
+            <ArrowForwardIcon />
+          </ControlButton>
         </ImageColumn>
         <TextColumn textOnLeft={textOnLeft}>
           <TextContent>
