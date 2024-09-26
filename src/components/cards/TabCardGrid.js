@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import tw from "twin.macro";
 import styled from "styled-components";
+
 import { css } from "styled-components/macro"; //eslint-disable-line
-import { Container, ContentWithPaddingXl } from "components/misc/Layouts.js";
-import { SectionHeading } from "components/misc/Headings.js";
-import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
-import { ReactComponent as StarIcon } from "images/star-icon.svg";
-import { ReactComponent as SvgDecoratorBlob1 } from "images/svg-decorator-blob-5.svg";
-import { ReactComponent as SvgDecoratorBlob2 } from "images/svg-decorator-blob-7.svg";
+import { Container, ContentWithPaddingXl } from "../misc/Layouts.js";
+import { SectionHeading } from "../misc/Headings.js";
+import { PrimaryButton as PrimaryButtonBase } from "../misc/Buttons.js";
+
+import { ReactComponent as SvgDecoratorBlob1 } from "../../images/svg-decorator-blob-5.svg";
+import { ReactComponent as SvgDecoratorBlob2 } from "../../images/svg-decorator-blob-7.svg";
 
 const HeaderRow = tw.div`flex justify-between items-center flex-col xl:flex-row`;
 const Header = tw(SectionHeading)``;
@@ -30,13 +31,6 @@ const CardImageContainer = styled.div`
   ${props => css`background-image: url("${props.imageSrc}");`}
   ${tw`h-56 xl:h-64 bg-center bg-cover relative rounded-t`}
 `;
-const CardRatingContainer = tw.div`leading-none absolute inline-flex bg-gray-100 bottom-0 left-0 ml-4 mb-4 rounded-full px-5 py-2 items-end`;
-const CardRating = styled.div`
-  ${tw`mr-1 text-sm font-bold flex items-end`}
-  svg {
-    ${tw`w-4 h-4 fill-current text-orange-400 mr-1`}
-  }
-`;
 
 const CardHoverOverlay = styled(motion.div)`
   background-color: rgba(255, 255, 255, 0.5);
@@ -44,7 +38,6 @@ const CardHoverOverlay = styled(motion.div)`
 `;
 const CardButton = tw(PrimaryButtonBase)`text-sm`;
 
-const CardReview = tw.div`font-medium text-xs text-gray-600`;
 
 const CardText = tw.div`p-4 text-gray-900`;
 const CardTitle = tw.h5`text-lg font-semibold group-hover:text-primary-500`;
@@ -61,91 +54,133 @@ const DecoratorBlob2 = styled(SvgDecoratorBlob2)`
 export default ({
   heading = "Checkout the Menu",
   tabs = {
-    Starters: [
+    Ongoing:[
       {
+        project_id: 5,
         imageSrc:
-          "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Veg Mixer",
-        content: "Tomato Salad & Carrot",
-        price: "$5.99",
-        rating: "5.0",
-        reviews: "87",
-        url: "#"
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/TamilNadu_Logo.svg/1200px-TamilNadu_Logo.svg.png",
+        title: "Construction of Vaigai River North Bank Road",
+        location: "Namakkal - Karur Toll Road, Tamil Nadu",
+        client: "Tamil Nadu Highways Department ",
+        content: " Kamarajar Bridge to Varanasi - Kanyakumari road (NH-44) Near Samayanallur (MDU-213)",
+        estimated_cost: "Rs. 54.60 Cr/- inc. GST"
       },
       {
+        project_id: 5,
         imageSrc:
-          "https://images.unsplash.com/photo-1432139555190-58524dae6a55?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Macaroni",
-        content: "Cheese Pizza",
-        price: "$2.99",
-        rating: "4.8",
-        reviews: "32",
-        url: "#"
+            "https://media.licdn.com/dms/image/v2/D560BAQHOkdMus_fLpg/company-logo_200_200/company-logo_200_200/0/1709119399719/indinfravit_trust_logo?e=2147483647&v=beta&t=tKpV26mD71dqj58T2Mu4N3ZoNRBFMw0YzDmyYg3WlhU",
+        title: "MMR Overlay Works at Simhapuri Expressway Ltd.",
+        location: "Namakkal - Karur Toll Road, Tamil Nadu",
+        client: "IndInfravit Trust ",
+        content: "The MMR Overlay Works at Simhapuri Expressway Ltd involves resurfacing and strengthening the existing pavement to enhance road durability and safety.",
+        estimated_cost: "Rs. 54.60 Cr/- inc. GST"
       },
       {
+        project_id: 5,
         imageSrc:
-          "https://images.unsplash.com/photo-1476224203421-9ac39bcb3327??ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Nelli",
-        content: "Hamburger & Fries",
-        price: "$7.99",
-        rating: "4.9",
-        reviews: "89",
-        url: "#"
+            "https://vajiram-prod.s3.ap-south-1.amazonaws.com/National_Highways_Authority_of_India_NHAI_2b16a244df.jpg",
+        title: "Strengthening of two lanes with paved shoulder.",
+        location: "Namakkal - Karur Toll Road, Tamil Nadu",
+        client: "Nation Highway Authority of India",
+        content: "Procurement & Construction (EPC) mode under Annual Plan 2022-23 in the State of Tamil Nadu",
+        estimated_cost: "Rs. 54.60 Cr/- inc. GST"
       },
       {
+        project_id: 5,
         imageSrc:
-          "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Jalapeno Poppers",
-        content: "Crispy Soyabeans",
-        price: "$8.99",
-        rating: "4.6",
-        reviews: "12",
-        url: "#"
-      },
-      {
-        imageSrc:
-          "https://images.unsplash.com/photo-1473093226795-af9932fe5856?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Cajun Chicken",
-        content: "Roasted Chicken & Egg",
-        price: "$7.99",
-        rating: "4.2",
-        reviews: "19",
-        url: "#"
-      },
-      {
-        imageSrc:
-          "https://images.unsplash.com/photo-1550461716-dbf266b2a8a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Chillie Cake",
-        content: "Deepfried Chicken",
-        price: "$2.99",
-        rating: "5.0",
-        reviews: "61",
-        url: "#"
-      },
-      {
-        imageSrc:
-          "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Guacamole Mex",
-        content: "Mexican Chilli",
-        price: "$3.99",
-        rating: "4.2",
-        reviews: "95",
-        url: "#"
-      },
-      {
-        imageSrc:
-          "https://images.unsplash.com/photo-1565310022184-f23a884f29da?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-        title: "Carnet Nachos",
-        content: "Chilli Crispy Nachos",
-        price: "$3.99",
-        rating: "3.9",
-        reviews: "26",
-        url: "#"
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/TamilNadu_Logo.svg/1200px-TamilNadu_Logo.svg.png",
+        title: "Construction of Grade Separator.",
+        location: "Namakkal - Karur Toll Road, Tamil Nadu",
+        client: "Tamil Nadu Highways Department",
+        content: "km 1/2 of Madurai - Thondi Road (SH33) including junction improvements at km 0/0 & 0/4",
+        estimated_cost: "Rs. 54.60 Cr/- inc. GST"
       }
+
+
+      
     ],
-    Main: getRandomCards(),
-    Soup: getRandomCards(),
-    Desserts: getRandomCards()
+    Completed: [
+      {
+        project_id: 7,
+        imageSrc:
+            "https://vajiram-prod.s3.ap-south-1.amazonaws.com/National_Highways_Authority_of_India_NHAI_2b16a244df.jpg",
+        title: "Overlay and Repairs in the Stretch",
+       
+        content: "Madurai – Kanyakumari Section of NH-7",
+        client: "NHAI PIU, Madurai",
+        estimated_cost: "Rs. 59.89 Cr/-"
+    },
+      {
+        imageSrc:
+          "https://img.etimg.com/thumb/msid-80453778,width-300,height-225,imgsize-32797,resizemode-75/reliance-infra-1.jpg",
+        title: "Construction of Widening of Two Lane to Four Lane bypasses",
+        client: "Reliance Infrastructure Limited",
+        content: "Reliance Infrastructure Limited BOT Concessionaire Supervision of PD NHAI, PIU – Salem",
+    },{
+      project_id: 5,
+      imageSrc:
+          "https://vajiram-prod.s3.ap-south-1.amazonaws.com/National_Highways_Authority_of_India_NHAI_2b16a244df.jpg",
+      title: "Periodic maintenance along the Namakkal - Karur Toll Road",
+      location: "Namakkal - Karur Toll Road, Tamil Nadu",
+      client: "Nation Highway Authority of India",
+      content: "BOT Concessionaire NHAI, PIU Salem",
+      estimated_cost: "Rs. 54.60 Cr/- inc. GST"
+    },
+    {
+      project_id: 8,
+      imageSrc:
+          "https://upload.wikimedia.org/wikipedia/en/3/36/Bangalore_Development_Authority_logo.jpeg",
+    title: "Formation of Magadi Road",
+    content:"Gangondanahalli Junction (4.661 Kms) & Madanayakanahalli in the State of Karnataka",
+      location: "NH-44, Tamil Nadu",
+      details: {
+          black_spots: ["TN-(02)-61", "TN(02)-186", "TN-(02)-185"],
+          mitigation_mode: "EPC mode",
+          areas: ["Salem", "Attayampatti", "Rasipuram"]
+      },
+      client: "Bangalore Development Authority",
+      estimated_cost: "Rs. 63 Cr/-"
+  }
+  ],
+    Signature:  [
+      {
+          project_id: 1,
+          imageSrc:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/TamilNadu_Logo.svg/440px-TamilNadu_Logo.svg.png",
+          title: "Widening from Two Lane to Four Lane and Improvements",
+          location: "Tambaram - Mudichur - Sriperumbudur Road",
+          client: "Tamil Nadu Highways Department",
+          division: "Construction and Maintenance Wing",
+          content: "Rs. 95 Cr/- inc. GST"
+      },
+      {
+          project_id: 2,
+          imageSrc:
+          "https://img.etimg.com/thumb/msid-80453778,width-300,height-225,imgsize-32797,resizemode-75/reliance-infra-1.jpg",
+          title: "Construction of Widening of Two Lane to Four Lane bypasses",
+          location: "Salem – Ulundurpet Section",
+          client: "Reliance Infrastructure Limited",
+          supervision: "BOT Concessionaire Supervision of PD NHAI, PIU – Salem",
+         content: "Rs. 254.78 Cr/- inc. GST"
+      },
+      {
+          project_id: 3,
+          imageSrc:"https://www.Notchindiaprojectsprojects.com/images/client-logo/609a29c3486f0w2.jpg",
+          title: "Renewal proposal for Nagapattinam – Gudalur – Mysore Road",
+          location: "NH 67 (New No: 83)",
+          client: "MORTH National Highways Madurai Circle",
+          content: "Rs. 98 Cr/- inc. GST"
+      },
+      {
+          project_id: 4,
+          imageSrc:
+          "https://img.etimg.com/thumb/msid-80453778,width-300,height-225,imgsize-32797,resizemode-75/reliance-infra-1.jpg",
+          title: "Periodic maintenance along the Trichy Karur Toll Road",
+          location: "Trichy Karur Toll Road, Tamil Nadu",
+          client: "Reliance Infrastructure Limited",
+          supervision: "BOT Concessionaire NHAI",
+          content: "Rs. 67.84 Cr/- inc. GST"
+      }
+  ]
   }
 }) => {
   /*
@@ -193,13 +228,7 @@ export default ({
               <CardContainer key={index}>
                 <Card className="group" href={card.url} initial="rest" whileHover="hover" animate="rest">
                   <CardImageContainer imageSrc={card.imageSrc}>
-                    <CardRatingContainer>
-                      <CardRating>
-                        <StarIcon />
-                        {card.rating}
-                      </CardRating>
-                      <CardReview>({card.reviews})</CardReview>
-                    </CardRatingContainer>
+                   
                     <CardHoverOverlay
                       variants={{
                         hover: {
@@ -213,7 +242,7 @@ export default ({
                       }}
                       transition={{ duration: 0.3 }}
                     >
-                      <CardButton>Buy Now</CardButton>
+                      <CardButton>{card.client}</CardButton>
                     </CardHoverOverlay>
                   </CardImageContainer>
                   <CardText>
@@ -233,91 +262,4 @@ export default ({
   );
 };
 
-/* This function is only there for demo purposes. It populates placeholder cards */
-const getRandomCards = () => {
-  const cards = [
-    {
-      imageSrc:
-        "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-      title: "Chicken Chilled",
-      content: "Chicken Main Course",
-      price: "$5.99",
-      rating: "5.0",
-      reviews: "87",
-      url: "#"
-    },
-    {
-      imageSrc:
-        "https://images.unsplash.com/photo-1582254465498-6bc70419b607?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-      title: "Samsa Beef",
-      content: "Fried Mexican Beef",
-      price: "$3.99",
-      rating: "4.5",
-      reviews: "34",
-      url: "#"
-    },
-    {
-      imageSrc:
-        "https://images.unsplash.com/photo-1565310022184-f23a884f29da?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-      title: "Carnet Nachos",
-      content: "Chilli Crispy Nachos",
-      price: "$3.99",
-      rating: "3.9",
-      reviews: "26",
-      url: "#"
-    },
-    {
-      imageSrc:
-        "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-      title: "Guacamole Mex",
-      content: "Mexican Chilli",
-      price: "$3.99",
-      rating: "4.2",
-      reviews: "95",
-      url: "#"
-    },
-    {
-      imageSrc:
-        "https://images.unsplash.com/photo-1550461716-dbf266b2a8a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-      title: "Chillie Cake",
-      content: "Deepfried Chicken",
-      price: "$2.99",
-      rating: "5.0",
-      reviews: "61",
-      url: "#"
-    },
-    {
-      imageSrc:
-        "https://images.unsplash.com/photo-1476224203421-9ac39bcb3327??ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-      title: "Nelli",
-      content: "Hamburger & Fries",
-      price: "$7.99",
-      rating: "4.9",
-      reviews: "89",
-      url: "#"
-    },
-    {
-      imageSrc:
-        "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-      title: "Jalapeno Poppers",
-      content: "Crispy Soyabeans",
-      price: "$8.99",
-      rating: "4.6",
-      reviews: "12",
-      url: "#"
-    },
-    {
-      imageSrc:
-        "https://images.unsplash.com/photo-1473093226795-af9932fe5856?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80",
-      title: "Cajun Chicken",
-      content: "Roasted Chicken & Egg",
-      price: "$7.99",
-      rating: "4.2",
-      reviews: "19",
-      url: "#"
-    }
-  ];
 
-  // Shuffle array
-  return cards.sort(() => Math.random() - 0.5);
-};
