@@ -107,6 +107,9 @@ import ThankYouPage from "ThankYouPage.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import EventLandingPage from "demos/EventLandingPage";
 import TwoColWithButton from "components/features/TwoColWithButton";
+import Timeline from "components/headers/TimeLine";
+import Projects from "components/headers/TimeLine";
+import EquipmentCards from "components/headers/TimeLine";
 
 
 export default function App() {
@@ -121,7 +124,7 @@ export default function App() {
         <Routes>
     
           <Route path="/" element={<EventLandingPage />} />
-          <Route path="/about" element={<TwoColWithButton/>} />
+          <Route path="/equipments" element={ <EquipmentCards/>} />
           {/* <Route path="/contact" element={<Contact />} /> */}
         </Routes>
       </Router>

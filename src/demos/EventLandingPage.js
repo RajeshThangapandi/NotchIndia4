@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
-import styled from "styled-components";
-import { TailSpin } from 'react-loader-spinner';
+import styled, { keyframes } from "styled-components";
 import tw from "twin.macro";
 import sampleVideo from '../images/video.mp4';
-import { NavLink } from "../components/headers/light.js";
-import TwoColContactUsWithIllustration from "components/forms/TwoColContactUsWithIllustration";
 import SimpleSubscribeNewsletter from "components/forms/SimpleSubscribeNewsletter";
 
-// Lazy load components
+
+// Lazy load non-critical components
 const AnimationRevealPage = lazy(() => import("helpers/AnimationRevealPage"));
 const Hero = lazy(() => import("components/hero/BackgroundAsImageWithCenteredContent"));
 const TrendingCard = lazy(() => import("components/cards/TwoTrendingPreviewCardsWithImage"));
@@ -21,9 +19,42 @@ const BackToTop = lazy(() => import("components/headers/BackTotop"));
 const MainFeature2 = lazy(() => import("components/features/TwoColSingleFeatureWithStats2"));
 const ThreeColCenteredStatsPrimaryBackground = lazy(() => import("components/features/ThreeColCenteredStatsPrimaryBackground"));
 
+// Keyframes for the bouncing effect
+const bounce = keyframes`
+  0%, 80%, 100% {
+    transform: scale(0);
+  } 
+  40% {
+    transform: scale(1);
+  }
+`;
+
 // Styled components
 const FullPageLoader = styled.div`
   ${tw`flex items-center justify-center fixed inset-0 bg-gray-100 z-50`}
+`;
+
+const DotContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 70px;
+`;
+
+const Dot = styled.div`
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: ${(props) => props.color};
+  animation: ${bounce} 1.4s infinite ease-in-out both;
+  &:nth-child(1) {
+    animation-delay: -0.32s;
+  }
+  &:nth-child(2) {
+    animation-delay: -0.16s;
+  }
+  &:nth-child(3) {
+    animation-delay: 0s;
+  }
 `;
 
 const TwoColumnContainer = styled.div`
@@ -61,10 +92,20 @@ const LearnMoreButton = styled.button`
 
 const StyledHeader = styled(Header)`
   ${tw`fixed top-0 left-0 w-full bg-white bg-opacity-75 backdrop-blur-md z-50`}
-  ${NavLink} {
-    ${tw`text-gray-900 hover:border-gray-300 hover:text-gray-300`}
-  }
 `;
+
+// Custom Loader component
+const Loader = () => {
+  return (
+    <FullPageLoader>
+      <DotContainer>
+        <Dot color="#ff6057" />  {/* Red Dot */}
+        <Dot color="#3f3f3f" />  {/* Green Dot */}
+        <Dot color="#2ec843" />  {/* Blue Dot */}
+      </DotContainer>
+    </FullPageLoader>
+  );
+};
 
 // Main Component
 const MainComponent = () => {
@@ -75,7 +116,7 @@ const MainComponent = () => {
   const TeamRef = useRef(null);
   const CareerRef = useRef(null);
   const ContactRef = useRef(null);
-  
+
   const videoRef = useRef(null); // Ref for the video element
 
   const scrollToSection = (elementRef) => {
@@ -111,11 +152,9 @@ const MainComponent = () => {
   return (
     <>
       {loading ? (
-        <FullPageLoader>
-          <TailSpin height="80" width="80" color="#000" ariaLabel="loading" />
-        </FullPageLoader>
+        <Loader />
       ) : (
-        <Suspense fallback={<FullPageLoader><TailSpin height="80" width="80" color="#000" ariaLabel="loading" /></FullPageLoader>}>
+        <Suspense fallback={<Loader />}>
           <AnimationRevealPage>
             <StyledHeader />
             <Hero refs={{ aboutRef, projectRef, EqpRef, ContactRef, CareerRef, TeamRef }} />
@@ -167,9 +206,10 @@ const MainComponent = () => {
               <ContactUsForm />
             </div>
 
-            <div ref={ContactRef}></div>
-            <SimpleSubscribeNewsletter />
+            <div ref={ContactRef}><SimpleSubscribeNewsletter/></div>
+            
             <Footer />
+          
             <BackToTop />
           </AnimationRevealPage>
         </Suspense>

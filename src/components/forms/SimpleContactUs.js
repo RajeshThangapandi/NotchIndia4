@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
-import { css } from "styled-components/macro"; //eslint-disable-line
 import { ReactComponent as SvgDotPatternIcon } from "../../images/dot-pattern.svg";
 import emailjs from "emailjs-com"; // Import EmailJS
 
 const Container = tw.div`relative`;
 const Content = tw.div`max-w-screen-xl mx-auto py-20 lg:py-24`;
-
 const FormContainer = styled.div`
   ${tw`p-10 sm:p-12 md:p-16 bg-primary-500 text-gray-100 rounded-lg relative`}
   form {
@@ -31,28 +29,29 @@ const InputContainer = tw.div`relative py-5 mt-6`;
 const Label = tw.label`absolute top-0 left-0 tracking-wide font-semibold text-sm`;
 const Input = tw.input``;
 const TextArea = tw.textarea`h-24 sm:h-full resize-none`;
-const FileInput = tw.input`mt-4 text-gray-100`;
 const SubmitButton = tw.button`w-full sm:w-32 mt-6 py-3 bg-gray-100 text-primary-500 rounded-full font-bold tracking-wide shadow-lg uppercase text-sm transition duration-300 transform focus:outline-none focus:shadow-outline hover:bg-gray-300 hover:text-primary-700 hocus:-translate-y-px hocus:shadow-xl`;
-
 const SvgDotPattern1 = tw(SvgDotPatternIcon)`absolute bottom-0 right-0 transform translate-y-1/2 translate-x-1/2 -z-10 opacity-50 text-primary-500 fill-current w-24`;
 
+// Modal Styling
+const ModalOverlay = tw.div`fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center`;
+const ModalContent = tw.div`bg-white p-6 rounded-lg shadow-lg text-center`;
+const ModalCloseButton = tw.button`mt-4 py-2 px-4 bg-primary-500 text-white rounded-full font-bold tracking-wide shadow-lg transition duration-300 focus:outline-none hover:bg-primary-700`;
+
+// Main Component
 export default () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
-    resume: null, // For file upload
+    resumeLink: "", // For Google Drive link
   });
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  // Handle file upload
-  const handleFileChange = (e) => {
-    setFormData((prev) => ({ ...prev, resume: e.target.files[0] }));
   };
 
   // Handle form submission
@@ -63,18 +62,19 @@ export default () => {
       name: formData.name,
       email: formData.email,
       message: formData.message,
-      // EmailJS doesn't natively support file attachments in the free tier via client side
-      // If you need to attach a file, you'd have to upgrade or handle it via a backend
+      resume_link: formData.resumeLink, // Add the resume link to the template parameters
     };
 
     emailjs.send(
       'service_nymi1fv', // Replace with your service ID
-      'template_7zoo8li', // Replace with your template ID
+      'template_vpjy7sp', // Replace with your template ID
       templateParams,
-      'RcdNgZHI-BA5kcOb0rl2D' // Replace with your user ID
+      'doEt3qvSV8t-m2C6i' // Replace with your user ID
     )
     .then((response) => {
-      alert('Email sent successfully!');
+      // Show modal on success
+      setIsModalVisible(true);
+      setFormData({ name: "", email: "", message: "", resumeLink: "" }); // Reset form
     })
     .catch((err) => {
       console.error('EmailJS Error:', err);
@@ -129,13 +129,14 @@ export default () => {
                     />
                   </InputContainer>
                   <InputContainer>
-                    <Label htmlFor="resume-input">Upload Resume (PDF)</Label>
-                    <FileInput
+                    <Label htmlFor="resume-input">Google Drive Link to Resume</Label>
+                    <Input
                       id="resume-input"
-                      type="file"
-                      name="resume"
-                      accept="application/pdf"
-                      onChange={handleFileChange}
+                      type="text"
+                      name="resumeLink"
+                      placeholder="Paste your Google Drive link here"
+                      value={formData.resumeLink}
+                      onChange={handleChange}
                       required
                     />
                   </InputContainer>
@@ -147,6 +148,17 @@ export default () => {
           <SvgDotPattern1 />
         </FormContainer>
       </Content>
+
+      {/* Modal for Success Message */}
+      {isModalVisible && (
+        <ModalOverlay>
+          <ModalContent>
+            <h2 tw="text-2xl font-bold text-primary-500">We Got Your Application!</h2>
+            <p tw="text-lg mt-2">Thank you for applying. We will get back to you shortly.</p>
+            <ModalCloseButton onClick={() => setIsModalVisible(false)}>Close</ModalCloseButton>
+          </ModalContent>
+        </ModalOverlay>
+      )}
     </Container>
   );
 };

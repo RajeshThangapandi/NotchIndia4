@@ -27,8 +27,9 @@
     "react-slick": "^0.29.0",
     "react-spinners": "^0.14.1",
     "react-spring": "^9.7.4",
+    "react-vertical-timeline-component": "^3.6.0",
     "slick-carousel": "^1.8.1",
-    "styled-components": "^5.3.5",
+    "styled-components": "^5.3.11",
     "tailwindcss": "^3.0.0",
     "twin.macro": "^3.0.0-rc.4"
   },

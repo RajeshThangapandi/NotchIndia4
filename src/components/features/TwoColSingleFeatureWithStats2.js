@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import tw from "twin.macro";
 
 const Container = tw.div`max-w-screen-lg mx-auto p-4`;
@@ -12,8 +13,11 @@ const Modal = tw.div`fixed inset-0 bg-black bg-opacity-75 flex items-center just
 const ModalContainer = tw.div`relative w-[90%] max-w-screen-lg`;
 const CloseButton = tw.button`absolute top-0 right-0 m-4 text-white text-3xl transition-transform transform hover:scale-110 z-10`;
 const Image = tw.img`h-96 w-auto object-cover mx-auto opacity-75`; // Adjusted opacity for the image
+const MoreEquipmentsButtonContainer = tw.div`flex justify-center mt-8`;
+const MoreEquipmentsButton = tw.button`py-2 px-6 bg-green-400 text-white font-bold rounded-lg transition-transform transform hover:scale-105`;
 
 const EquipmentList = () => {
+  const navigate = useNavigate(); // Initialize useNavigate
   const equipmentData = [
     {
       title: "Apollo Hot Mix Plant",
@@ -56,6 +60,11 @@ const EquipmentList = () => {
     }
   };
 
+  // Function to handle button click
+  const handleMoreEquipmentsClick = () => {
+    navigate('/equipments'); // Navigate to /equipments
+  };
+
   return (
     <Container>
       <Title>Construction Site Equipment</Title>
@@ -69,6 +78,13 @@ const EquipmentList = () => {
           </Card>
         ))}
       </CardContainer>
+
+      {/* Centered More Equipments Button */}
+      <MoreEquipmentsButtonContainer>
+        <MoreEquipmentsButton onClick={handleMoreEquipmentsClick}>
+          More Equipments
+        </MoreEquipmentsButton>
+      </MoreEquipmentsButtonContainer>
 
       {/* Modal */}
       {isModalOpen && (
