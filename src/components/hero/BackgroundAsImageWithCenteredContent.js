@@ -82,9 +82,9 @@ const FullWidthCarousel = ({ refs }) => {
       <NavLink onClick={() => scrollToSection(refs.aboutRef)} style={{ color: 'rgb(37, 150, 190)' }}>About</NavLink>
       <NavLink onClick={() => scrollToSection(refs.projectRef)}>Projects</NavLink>
       <NavLink onClick={() => scrollToSection(refs.EqpRef)}>Equipments</NavLink>
-      <NavLink onClick={() => scrollToSection(refs.ContactRef)}>Contact Us</NavLink>
       <NavLink onClick={() => scrollToSection(refs.TeamRef)}>Team</NavLink>
       <NavLink onClick={() => scrollToSection(refs.CareerRef)}>Careers</NavLink>
+      <NavLink onClick={() => scrollToSection(refs.ContactRef)}>Contact Us</NavLink>
     </NavLinks>
   );
 

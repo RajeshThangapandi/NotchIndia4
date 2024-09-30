@@ -70,11 +70,13 @@ const StyledHeader = styled(Header)`
 const MainComponent = () => {
   const [loading, setLoading] = useState(true);
   const aboutRef = useRef(null);
-  const projectRef = useRef(null); 
-  const EqpRef = useRef(null); 
-  const TeamRef = useRef(null); 
-  const CareerRef = useRef(null); 
-  const ContactRef = useRef(null);  // Ref for About section
+  const projectRef = useRef(null);
+  const EqpRef = useRef(null);
+  const TeamRef = useRef(null);
+  const CareerRef = useRef(null);
+  const ContactRef = useRef(null);
+  
+  const videoRef = useRef(null); // Ref for the video element
 
   const scrollToSection = (elementRef) => {
     if (elementRef && elementRef.current) {
@@ -82,6 +84,19 @@ const MainComponent = () => {
         top: elementRef.current.offsetTop,
         behavior: "smooth",
       });
+    }
+  };
+
+  const handleWatchVideo = () => {
+    if (videoRef.current) {
+      videoRef.current.play(); // Play the video
+      if (videoRef.current.requestFullscreen) {
+        videoRef.current.requestFullscreen(); // Enter full-screen mode
+      } else if (videoRef.current.webkitRequestFullscreen) { // Safari
+        videoRef.current.webkitRequestFullscreen();
+      } else if (videoRef.current.msRequestFullscreen) { // IE11
+        videoRef.current.msRequestFullscreen();
+      }
     }
   };
 
@@ -103,13 +118,13 @@ const MainComponent = () => {
         <Suspense fallback={<FullPageLoader><TailSpin height="80" width="80" color="#000" ariaLabel="loading" /></FullPageLoader>}>
           <AnimationRevealPage>
             <StyledHeader />
-            <Hero refs={{aboutRef,projectRef,EqpRef,ContactRef,CareerRef,TeamRef}}/>
+            <Hero refs={{ aboutRef, projectRef, EqpRef, ContactRef, CareerRef, TeamRef }} />
 
             {/* The "About" Section */}
-            <div >
+            <div>
               <TwoColumnContainer>
                 <VideoColumn>
-                  <StyledVideo controls autoPlay muted loop>
+                  <StyledVideo ref={videoRef} controls autoPlay muted loop>
                     <source src={sampleVideo} type="video/mp4" />
                     Your browser does not support the video tag.
                   </StyledVideo>
@@ -122,7 +137,7 @@ const MainComponent = () => {
                     Dive into this amazing visual journey with our latest projects.
                     Explore cutting-edge designs, technology, and solutions.
                   </Description>
-                  <LearnMoreButton>
+                  <LearnMoreButton onClick={handleWatchVideo}>
                     Watch Video
                   </LearnMoreButton>
                 </ContentColumn>
@@ -130,30 +145,30 @@ const MainComponent = () => {
             </div>
 
             {/* Other Sections */}
-           <div ref={aboutRef}>
-           <MainFeature ref={aboutRef} subheading={<span>Since 2014</span>} heading="25 Years of Excellence" />
-            </div> 
+            <div ref={aboutRef}>
+              <MainFeature ref={aboutRef} subheading={<span>Since 2014</span>} heading="25 Years of Excellence" />
+            </div>
             <TrendingCard />
             <div ref={projectRef}>
-            <TabCardGrid heading="Our Projects" />
+              <TabCardGrid heading="Our Projects" />
             </div>
-            
+
             <div ref={EqpRef}>
-            <MainFeature2 heading="Our Equipments" />
+              <MainFeature2 heading="Our Equipments" />
             </div>
-            
+
             <div ref={TeamRef}>
-            <ProfileThreeColGrid />
+              <ProfileThreeColGrid />
             </div>
-            
+
             <ThreeColCenteredStatsPrimaryBackground />
 
             <div ref={CareerRef}>
-            <ContactUsForm />
+              <ContactUsForm />
             </div>
-            
+
             <div ref={ContactRef}></div>
-            <SimpleSubscribeNewsletter/>
+            <SimpleSubscribeNewsletter />
             <Footer />
             <BackToTop />
           </AnimationRevealPage>
