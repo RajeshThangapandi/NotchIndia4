@@ -3,8 +3,7 @@ import tw from "twin.macro";
 import styled from "styled-components";
 import Slider from "react-slick"; // Import react-slick
 import Header, { NavLink, NavLinks } from "../headers/light.js";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { MdArrowBack, MdArrowForward } from 'react-icons/md'; // Importing Material Design icons for arrows
 
 // Styled Components for the Carousel
 const StyledHeader = styled(Header)`
@@ -97,10 +96,10 @@ const FullWidthCarousel = ({ refs }) => {
             <OpacityOverlay /> {/* Overlay on the image */}
             <IconContainer>
               <Icon onClick={() => sliderRef?.slickPrev()}>
-                <FontAwesomeIcon icon={faChevronLeft} /> {/* Font Awesome Left Arrow */}
+                <MdArrowBack size={24} /> {/* Material Design Left Arrow */}
               </Icon>
               <Icon onClick={() => sliderRef?.slickNext()}>
-                <FontAwesomeIcon icon={faChevronRight} /> {/* Font Awesome Right Arrow */}
+                <MdArrowForward size={24} /> {/* Material Design Right Arrow */}
               </Icon>
             </IconContainer>
           </BackgroundImage>
