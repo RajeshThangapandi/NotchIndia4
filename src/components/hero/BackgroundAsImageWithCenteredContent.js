@@ -1,58 +1,48 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
-import Header, { NavLink, NavLinks, PrimaryLink as PrimaryLinkBase, LogoLink } from "../headers/light.js";
+import Slider from "react-slick"; // Import react-slick
+import Header, { NavLink, NavLinks } from "../headers/light.js";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-// Styled Components
+// Styled Components for the Carousel
 const StyledHeader = styled(Header)`
-  ${tw`pt-8 max-w-none w-full`}
-  ${NavLink}, ${LogoLink} {
-    ${tw`text-gray-100 hover:border-gray-300 hover:text-gray-300`}
+  ${tw`fixed top-0 left-0 w-full bg-white bg-opacity-75 backdrop-blur-md z-50`}
+  ${NavLink} {
+    ${tw`text-gray-900 hover:border-gray-300 hover:text-gray-300`}
   }
 `;
 
-const PrimaryLink = tw(PrimaryLinkBase)`rounded-full`;
-const PrimaryAction = tw.button`rounded-full px-8 py-3 mt-10 text-sm sm:text-base sm:mt-16 sm:px-8 sm:py-4 bg-green-300 font-bold shadow transition duration-300 hocus:bg-green-400 text-gray-900 hocus:text-gray-100 focus:outline-none focus:shadow-outline`;
-
-const SignInLink = styled(PrimaryLink)`
-  ${tw`bg-blue-400`}
-  color: black;  
-  &:hover {
-    ${tw`bg-blue-700`}
-    color: black; 
-  }
-`;
-
-const Container = styled.div`
-  ${tw`relative -mx-8 -mt-8 h-screen min-h-144`}
-  overflow: hidden; 
-`;
-
-const OpacityOverlay = tw.div`z-10 absolute inset-0 bg-black opacity-25`;
-
-const HeroContainer = tw.div`z-20 relative px-6 sm:px-8 mx-auto h-full flex flex-col`;
-const Content = tw.div`px-4 flex flex-1 flex-col justify-center items-center`;
-
-// Heading Style
-const Heading = styled.h1`
-  ${tw`text-3xl text-center sm:text-4xl lg:text-5xl xl:text-6xl font-black text-gray-100 leading-snug -mt-24 sm:mt-0`}
-  span {
-    ${tw`inline-block mt-2`}
-  }
-`;
-
-
-// Styled background image for mobile and tablet
 const BackgroundImage = styled.div`
   background-image: url(${(props) => props.imageUrl});
   background-size: cover;
   background-position: center;
-  height: 100%;
-  width: 100%;
+  height: 80vh; /* Height of the carousel */
+  width: 100%; /* Full width */
+  position: relative;
+`;
+
+const OpacityOverlay = tw.div`absolute inset-0 bg-black opacity-25 z-10`;
+
+const IconContainer = styled.div`
   position: absolute;
-  top: 0;
+  top: 50%;
   left: 0;
-  z-index: 1; // Behind content
+  right: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  width: 100%; /* Ensure the container takes the full width */
+  padding: 0 20px; /* Optional: Add some padding to the icons */
+`;
+
+const Icon = styled.button`
+  ${tw`bg-gray-200 rounded-full p-2`}
+  &:hover {
+    ${tw`bg-gray-300`}
+  }
 `;
 
 const imageUrls = [
@@ -62,50 +52,64 @@ const imageUrls = [
   // Add more images as needed
 ];
 
-export default () => {
-  const [currentImage, setCurrentImage] = useState(imageUrls[0]);
+const FullWidthCarousel = ({ refs }) => {
+  const [sliderRef, setSliderRef] = useState(null); // Ref to hold the slider instance
+  const [navbarVisible, setNavbarVisible] = useState(true); // State to manage navbar visibility
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImage((prevImage) => {
-        const currentIndex = imageUrls.indexOf(prevImage);
-        const nextIndex = (currentIndex + 1) % imageUrls.length;
-        console.log(`Changing background to: ${imageUrls[nextIndex]}`); // Debugging
-        return imageUrls[nextIndex];
-      });
-    }, 1000); // Change image every second
+  const settings = {
+    dots: false, // Disable dots
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    arrows: false, // Disable default arrows
+  };
 
-    return () => clearInterval(interval); // Cleanup on component unmount
-  }, []);
+  const scrollToSection = (elementRef) => {
+    // Hide the navbar immediately when a nav link is clicked
+    setNavbarVisible(false);
 
-  const navLinks = [
+    // Smooth scroll to the specific section
+    elementRef.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  };
+
+  const navLinks = (
     <NavLinks key={1}>
-      <NavLink href="#">About</NavLink>
-      <NavLink href="#">Blog</NavLink>
-      <NavLink href="#">Locations</NavLink>
-      <NavLink href="#">Pricing</NavLink>
-    </NavLinks>,
-    <NavLinks key={2}>
-      <SignInLink href="/components/innerPages/LoginPage">SignIn</SignInLink>
-      <PrimaryLink href="/components/innerPages/SignupPage">SignUp</PrimaryLink>
+      <NavLink onClick={() => scrollToSection(refs.aboutRef)} style={{ color: 'rgb(37, 150, 190)' }}>About</NavLink>
+      <NavLink onClick={() => scrollToSection(refs.projectRef)}>Projects</NavLink>
+      <NavLink onClick={() => scrollToSection(refs.EqpRef)}>Equipments</NavLink>
+      <NavLink onClick={() => scrollToSection(refs.ContactRef)}>Contact Us</NavLink>
+      <NavLink onClick={() => scrollToSection(refs.TeamRef)}>Team</NavLink>
+      <NavLink onClick={() => scrollToSection(refs.CareerRef)}>Careers</NavLink>
     </NavLinks>
-  ];
+  );
 
   return (
-    <Container>
-      <OpacityOverlay />
-      <BackgroundImage imageUrl={currentImage} /> {/* Background image for mobile and tablet */}
-      <HeroContainer>
-        <StyledHeader links={navLinks} />
-        <Content>
-          <Heading>
-          Building Landmarks
-            <br />
-            Building Trust
-          </Heading>
-          <PrimaryAction>Contact Us</PrimaryAction>
-        </Content>
-      </HeroContainer>
-    </Container>
+    <>
+      <Slider ref={setSliderRef} {...settings}>
+        {imageUrls.map((imageUrl, index) => (
+          <BackgroundImage key={index} imageUrl={imageUrl}>
+            <OpacityOverlay /> {/* Overlay on the image */}
+            <IconContainer>
+              <Icon onClick={() => sliderRef?.slickPrev()}>
+                <FontAwesomeIcon icon={faChevronLeft} /> {/* Font Awesome Left Arrow */}
+              </Icon>
+              <Icon onClick={() => sliderRef?.slickNext()}>
+                <FontAwesomeIcon icon={faChevronRight} /> {/* Font Awesome Right Arrow */}
+              </Icon>
+            </IconContainer>
+          </BackgroundImage>
+        ))}
+      </Slider>
+      {/* Always render the navbar, but toggle its visibility with CSS */}
+      <StyledHeader links={navLinks} style={{ display: navbarVisible ? 'block' : 'none' }} />
+    </>
   );
 };
+
+export default FullWidthCarousel;

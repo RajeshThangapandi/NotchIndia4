@@ -101,7 +101,7 @@ export default () => {
                       <LocationIcon /> {card.locationText}
                     </CardMetaFeature>
                   </CardMeta>
-                  <CardAction>Contact</CardAction>
+                
                 </CardText>
               </Card>
             </CardColumn>

@@ -1,110 +1,166 @@
-import React from "react";
-import AnimationRevealPage from "helpers/AnimationRevealPage.js";
-import Hero from "components/hero/BackgroundAsImageWithCenteredContent.js";
-import TrendingCard from "../components/cards/TwoTrendingPreviewCardsWithImage.js";
+import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
 import styled from "styled-components";
-import ContactUsForm from "components/forms/SimpleContactUs.js";
-import Footer from "components/footers/SimpleFiveColumn.js";
-import ProfileThreeColGrid from "components/cards/ProfileThreeColGrid";
+import { TailSpin } from 'react-loader-spinner';
 import tw from "twin.macro";
-import MainFeature from "../components/features/TwoColWithButton.js";
-import MainFeature2 from "../components/features/TwoColSingleFeatureWithStats2.js";
-import sampleVideo from '../images/video.mp4'; // Import your video file here
-import ThreeColCenteredStatsPrimaryBackground from "components/features/ThreeColCenteredStatsPrimaryBackground";
-import TabCardGrid from "components/cards/TabCardGrid";
+import sampleVideo from '../images/video.mp4';
+import { NavLink } from "../components/headers/light.js";
+import TwoColContactUsWithIllustration from "components/forms/TwoColContactUsWithIllustration";
+import SimpleSubscribeNewsletter from "components/forms/SimpleSubscribeNewsletter";
 
-const HighlightedText = tw.span`bg-primary-500 text-gray-100 px-4 transform -skew-x-12 inline-block`;
-const Subheading = tw.span`tracking-wider text-sm font-medium`;
-const imageCss = tw`rounded-4xl`;
+// Lazy load components
+const AnimationRevealPage = lazy(() => import("helpers/AnimationRevealPage"));
+const Hero = lazy(() => import("components/hero/BackgroundAsImageWithCenteredContent"));
+const TrendingCard = lazy(() => import("components/cards/TwoTrendingPreviewCardsWithImage"));
+const ContactUsForm = lazy(() => import("components/forms/SimpleContactUs"));
+const Footer = lazy(() => import("components/footers/SimpleFiveColumn"));
+const ProfileThreeColGrid = lazy(() => import("components/cards/ProfileThreeColGrid"));
+const MainFeature = lazy(() => import("components/features/TwoColWithButton"));
+const TabCardGrid = lazy(() => import("components/cards/TabCardGrid"));
+const Header = lazy(() => import("components/headers/light"));
+const BackToTop = lazy(() => import("components/headers/BackTotop"));
+const MainFeature2 = lazy(() => import("components/features/TwoColSingleFeatureWithStats2"));
+const ThreeColCenteredStatsPrimaryBackground = lazy(() => import("components/features/ThreeColCenteredStatsPrimaryBackground"));
+
+// Styled components
+const FullPageLoader = styled.div`
+  ${tw`flex items-center justify-center fixed inset-0 bg-gray-100 z-50`}
+`;
+
+const TwoColumnContainer = styled.div`
+  ${tw`flex flex-col md:flex-row justify-between items-center mt-32`} 
+  max-width: 1200px;
+  margin: 80px auto;
+  gap: 40px;
+`;
+
+const VideoColumn = styled.div`
+  ${tw`md:w-1/2 w-full p-4`}
+`;
+
+const ContentColumn = styled.div`
+  ${tw`md:w-1/2 w-full text-left p-4`}
+  background: #f9fafb;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+`;
 
 const StyledVideo = styled.video`
-  ${tw`rounded bg-black shadow-xl`} // Keep existing styles
-  max-width: 800px; // Set a maximum width
-  width: 100%; // Make it responsive
-  height: auto; // Maintain aspect ratio
+  ${tw`rounded-lg bg-black shadow-xl`}
+  width: 100%;
+  height: auto;
 `;
 
-const VideoContainer = styled.div`
-  ${tw`flex justify-center mt-12`} // Flexbox for centering and margin-top for gap
+const Description = styled.p`
+  ${tw`text-lg text-gray-600 mt-4 leading-relaxed`}
 `;
-const Description = tw.span`inline-block mt-8`;
 
-export default () => (
-  <AnimationRevealPage>
-    <Hero />
-    <VideoContainer>
-      <StyledVideo controls autoPlay muted loop>
-        <source src={sampleVideo} type="video/mp4" />
-        Your browser does not support the video tag.
-      </StyledVideo>
-    </VideoContainer>
-    <TrendingCard />
-    <MainFeature
-        subheading={<Subheading>Established Since 2014</Subheading>}
-        heading={
-          <>
-            We've been serving for
-            <wbr /> <HighlightedText>over 25 years.</HighlightedText>
-          </>
-        }
-        description={
-          <Description>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua.
-            <br />
-            <br />
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          </Description>
-        }
-        buttonRounded={false}
-        textOnLeft={false}
-        primaryButtonText="Latest Offers"
-        imageSrc={
-          "https://images.unsplash.com/photo-1460306855393-0410f61241c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"
-        }
-        imageCss={imageCss}
-        imageDecoratorBlob={true}
-        imageDecoratorBlobCss={tw`left-1/2 -translate-x-1/2 md:w-32 md:h-32 opacity-25`}
-      /> 
-    <TabCardGrid
-      heading={
-        <>
-          Our <HighlightedText>Projects.</HighlightedText>
-        </>
-      }
-    />
-    <MainFeature2
-      subheading={<Subheading>A Reputed Brand</Subheading>}
-      heading={<>Our <HighlightedText>Equipments</HighlightedText></>}
-      statistics={[
-        {
-          key: "Orders",
-          value: "94000+",
-        },
-        {
-          key: "Customers",
-          value: "11000+"
-        },
-        {
-          key: "Chefs",
-          value: "1500+"
-        }
-      ]}
-      primaryButtonText="Order Now"
-      primaryButtonUrl="https://order.now.com"
-      imageInsideDiv={false}
-      imageSrc="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzI2fQ&auto=format&fit=crop&w=768&q=80"
-      imageCss={Object.assign(tw`bg-cover`, imageCss)}
-      imageContainerCss={tw`md:w-1/2 h-auto`}
-      imageDecoratorBlob={true}
-      imageDecoratorBlobCss={tw`left-1/2 md:w-32 md:h-32 -translate-x-1/2 opacity-25`}
-      textOnLeft={true}
-    />
-  
-    <ProfileThreeColGrid />
-   
-    <ThreeColCenteredStatsPrimaryBackground />
-    <ContactUsForm />
-    <Footer />
-  </AnimationRevealPage>
-);
+const LearnMoreButton = styled.button`
+  ${tw`mt-8 bg-primary-500 text-gray-100 px-8 py-3 rounded-lg hover:bg-primary-700 transition duration-300`}
+  box-shadow: 0px 8px 16px rgba(37, 150, 190, 0.3);
+`;
+
+const StyledHeader = styled(Header)`
+  ${tw`fixed top-0 left-0 w-full bg-white bg-opacity-75 backdrop-blur-md z-50`}
+  ${NavLink} {
+    ${tw`text-gray-900 hover:border-gray-300 hover:text-gray-300`}
+  }
+`;
+
+// Main Component
+const MainComponent = () => {
+  const [loading, setLoading] = useState(true);
+  const aboutRef = useRef(null);
+  const projectRef = useRef(null); 
+  const EqpRef = useRef(null); 
+  const TeamRef = useRef(null); 
+  const CareerRef = useRef(null); 
+  const ContactRef = useRef(null);  // Ref for About section
+
+  const scrollToSection = (elementRef) => {
+    if (elementRef && elementRef.current) {
+      window.scrollTo({
+        top: elementRef.current.offsetTop,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // 2 seconds loading time
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <>
+      {loading ? (
+        <FullPageLoader>
+          <TailSpin height="80" width="80" color="#000" ariaLabel="loading" />
+        </FullPageLoader>
+      ) : (
+        <Suspense fallback={<FullPageLoader><TailSpin height="80" width="80" color="#000" ariaLabel="loading" /></FullPageLoader>}>
+          <AnimationRevealPage>
+            <StyledHeader />
+            <Hero refs={{aboutRef,projectRef,EqpRef,ContactRef,CareerRef,TeamRef}}/>
+
+            {/* The "About" Section */}
+            <div >
+              <TwoColumnContainer>
+                <VideoColumn>
+                  <StyledVideo controls autoPlay muted loop>
+                    <source src={sampleVideo} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </StyledVideo>
+                </VideoColumn>
+                <ContentColumn>
+                  <h2 tw="text-4xl font-bold text-gray-900 leading-snug">
+                    Captivating <span tw="bg-primary-500 text-gray-100 px-4 transform -skew-x-12 inline-block">Video Experience</span>
+                  </h2>
+                  <Description>
+                    Dive into this amazing visual journey with our latest projects.
+                    Explore cutting-edge designs, technology, and solutions.
+                  </Description>
+                  <LearnMoreButton>
+                    Watch Video
+                  </LearnMoreButton>
+                </ContentColumn>
+              </TwoColumnContainer>
+            </div>
+
+            {/* Other Sections */}
+           <div ref={aboutRef}>
+           <MainFeature ref={aboutRef} subheading={<span>Since 2014</span>} heading="25 Years of Excellence" />
+            </div> 
+            <TrendingCard />
+            <div ref={projectRef}>
+            <TabCardGrid heading="Our Projects" />
+            </div>
+            
+            <div ref={EqpRef}>
+            <MainFeature2 heading="Our Equipments" />
+            </div>
+            
+            <div ref={TeamRef}>
+            <ProfileThreeColGrid />
+            </div>
+            
+            <ThreeColCenteredStatsPrimaryBackground />
+
+            <div ref={CareerRef}>
+            <ContactUsForm />
+            </div>
+            
+            <div ref={ContactRef}></div>
+            <SimpleSubscribeNewsletter/>
+            <Footer />
+            <BackToTop />
+          </AnimationRevealPage>
+        </Suspense>
+      )}
+    </>
+  );
+};
+
+export default MainComponent;
