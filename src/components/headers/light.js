@@ -1,4 +1,4 @@
-import React,{ useRef } from "react";
+import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import tw from "twin.macro";
 import styled from "styled-components";
@@ -7,43 +7,41 @@ import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 
 const Header = tw.header`
-  flex justify-between items-center w-full bg-white /* Full width and white background for the header */
-  px-4 /* Padding for sides */
-  fixed top-0 left-0 z-50 /* Fixed position at the top with z-index */
+  flex justify-between items-center w-full bg-white
+  px-4 fixed top-0 left-0 z-50
 `;
 
-export const NavLinks = tw.div`inline-block`;
+export const NavLinks = tw.div`inline-block flex items-center justify-between flex-nowrap`; // Prevent wrapping
 
 export const NavLink = styled.a`
-  ${tw`text-lg my-2 lg:text-sm lg:mx-6 lg:my-0 font-semibold tracking-wide transition duration-300 pb-1 border-b-2 border-transparent`}
-
-  /* Black text for all links */
+  ${tw`text-sm my-1 lg:mx-2 font-semibold tracking-wide transition duration-300 pb-1 border-b-2 border-transparent`} // Decreased font size and margin
   color: black !important;
+  flex-grow: 1; // Allow nav links to grow and take available space
+  min-width: 70px; // Set a minimum width for consistent sizing
+  text-align: center; // Center align text for better appearance
 
-  /* Default color for the "About" link */
   &:nth-child(1) {
-    color: rgb(37, 150, 190) !important; /* Set color for "About" link */
+    color: rgb(37, 150, 190) !important;
   }
 
-  /* Hover color */
   &:hover {
-    color: rgb(37, 150, 190) !important; /* Set hover color */
+    color: rgb(37, 150, 190) !important;
   }
 
-  /* Light blue color in mobile views */
   @media (max-width: 1024px) {
-    color: black !important;
+    font-size: 14px; // Maintain consistent font size on smaller screens
+    padding: 5px 10px; // Adjust padding for smaller touch targets
   }
 `;
 
 export const PrimaryLink = tw(NavLink)`
-  lg:mx-0 px-8 py-3 rounded bg-green-500 text-gray-100
+  lg:mx-0 px-4 py-2 rounded bg-green-500 text-gray-100
   hocus:bg-green-700 hocus:text-gray-200 focus:shadow-outline border-b-0
 `;
 
 export const LogoLink = styled(NavLink)`
   ${tw`flex items-center font-black border-b-0 text-2xl! ml-0!`};
-  background-color: white; /* Set white background here */
+  background-color: white;
   padding: 10px;
   border-radius: 8px;
 
@@ -59,39 +57,41 @@ export const NavToggle = tw.button`
 
 export const MobileNavLinks = motion(styled.div`
   ${tw`lg:hidden z-10 fixed top-0 inset-x-0 mx-4 my-6 p-8 border text-center rounded-lg text-gray-900`}
-  background-color: white; /* Set white background here */
-  
+  background-color: white;
+
   ${NavLinks} {
     ${tw`flex flex-col items-center`}
   }
 `);
+
 const scrollToSection = (elementRef) => {
   window.scrollTo({
     top: elementRef.current.offsetTop,
-    behavior: 'smooth', // Smooth scroll effect
+    behavior: "smooth",
   });
 };
 
-
-
-export const DesktopNavLinks = tw.nav`
-  hidden lg:flex flex-1 justify-between items-center
+export const DesktopNavLinks = styled.nav`
+  ${tw`hidden lg:flex flex-1 justify-between items-center`}
+  gap: 10px; // Decrease gap between nav links
 `;
 
-export default ({ roundedHeaderButton = false, logoLink, links, className, collapseBreakpointClass = "lg" }) => {
+export default ({ roundedHeaderButton = false, logoLink, links, className }) => {
   const defaultLinks = [
     <NavLinks key={1}>
-
-      <NavLink onClick={() => scrollToSection(homeRef)} style={{ color: 'rgb(37, 150, 190)' }}>About</NavLink>
+      <NavLink onClick={() => scrollToSection(homeRef)} style={{ color: "rgb(37, 150, 190)" }}>
+        About
+      </NavLink>
       <NavLink href="/#">Blog</NavLink>
       <NavLink href="/#">Pricing</NavLink>
       <NavLink href="/#">Contact Us</NavLink>
-      <NavLink href="/#" style={{ color: 'rgb(37, 150, 190)' }} >Careers</NavLink>
+      <NavLink href="/#" style={{ color: "rgb(37, 150, 190)" }}>
+        Careers
+      </NavLink>
     </NavLinks>
   ];
 
   const { showNavLinks, animation, toggleNavbar } = useAnimatedNavToggler();
-  const collapseBreakpointCss = collapseBreakPointCssMap[collapseBreakpointClass];
   const homeRef = useRef(null);
   const defaultLogoLink = (
     <LogoLink href="/">
@@ -104,14 +104,14 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
 
   return (
     <Header className={className || "header-light"}>
-      <DesktopNavLinks css={collapseBreakpointCss.desktopNavLinks}>
+      <DesktopNavLinks className="desktop-nav-container">
         {logoLink}
         {links}
       </DesktopNavLinks>
 
-      <MobileNavLinksContainer css={collapseBreakpointCss.mobileNavLinksContainer}>
+      <MobileNavLinksContainer className="mobile-nav-container">
         {logoLink}
-        <MobileNavLinks initial={{ x: "150%", display: "none" }} animate={animation} css={collapseBreakpointCss.mobileNavLinks}>
+        <MobileNavLinks initial={{ x: "150%", display: "none" }} animate={animation}>
           {links}
         </MobileNavLinks>
         <NavToggle onClick={toggleNavbar} className={showNavLinks ? "open" : "closed"}>
@@ -120,27 +120,4 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
       </MobileNavLinksContainer>
     </Header>
   );
-};
-
-const collapseBreakPointCssMap = {
-  sm: {
-    mobileNavLinks: tw`sm:hidden`,
-    desktopNavLinks: tw`sm:flex`,
-    mobileNavLinksContainer: tw`sm:hidden`
-  },
-  md: {
-    mobileNavLinks: tw`md:hidden`,
-    desktopNavLinks: tw`md:flex`,
-    mobileNavLinksContainer: tw`md:hidden`
-  },
-  lg: {
-    mobileNavLinks: tw`lg:hidden`,
-    desktopNavLinks: tw`lg:flex`,
-    mobileNavLinksContainer: tw`lg:hidden`
-  },
-  xl: {
-    mobileNavLinks: tw`lg:hidden`,
-    desktopNavLinks: tw`lg:flex`,
-    mobileNavLinksContainer: tw`lg:hidden`
-  }
 };

@@ -100,7 +100,7 @@ const Loader = () => {
     <FullPageLoader>
       <DotContainer>
         <Dot color="#ff6057" />  {/* Red Dot */}
-        <Dot color="#3f3f3f" />  {/* Green Dot */}
+        <Dot color="#febc2e" />  {/* Green Dot */}
         <Dot color="#2ec843" />  {/* Blue Dot */}
       </DotContainer>
     </FullPageLoader>
