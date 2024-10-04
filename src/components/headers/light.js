@@ -6,16 +6,15 @@ import useAnimatedNavToggler from "../../helpers/useAnimatedNavToggler.js";
 import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
 
-const Header = styled.header(() => [
+const Header = styled.header(({ isScrolled }) => [
   tw`flex justify-between items-center w-full fixed top-0 left-0 z-50 px-4 transition-all duration-300`,
-  { backgroundColor: 'rgba(255, 255, 255, 0)' }, // Fully transparent background
+  { backgroundColor: isScrolled ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0)' }, // Change background based on scroll
 ]);
 
 export const NavLink = styled.a`
   ${tw`my-2 lg:mx-4 lg:my-0 font-semibold tracking-wide transition duration-300 pb-1 border-b-2 border-transparent`}
   
-  // Set default text size for all screen sizes
-  font-size: 1.1rem; // Change this value to increase/decrease the size
+  font-size: 1.1rem;
 
   &:nth-child(1) {
     color: #0ed1b2 !important;
@@ -30,10 +29,9 @@ export const NavLink = styled.a`
   }
 
   @media (max-width: 1024px) {
-    font-size: 1.0rem; // Adjust this value for larger screens if desired
+    font-size: 1.0rem;
   }
 `;
-
 
 export const NavLinks = styled.div`
   ${tw`inline-block flex lg:flex-row lg:items-center`}
@@ -85,11 +83,13 @@ export const DesktopNavLinks = tw.nav`
 `;
 
 export default ({ roundedHeaderButton = false, logoLink, links, className, collapseBreakpointClass = "md" }) => {
-  const [isScrolled, setIsScrolled] = useState(false); // State to track if the navbar is scrolled
+  const [isScrolled, setIsScrolled] = useState(false);
   const { showNavLinks, animation, toggleNavbar } = useAnimatedNavToggler();
   const collapseBreakpointCss = collapseBreakPointCssMap[collapseBreakpointClass];
   const homeRef = useRef(null);
 
+
+  console.log(isScrolled)
   const defaultLogoLink = (
     <LogoLink href="/">
       <img src="https://www.Notchindiaprojects.com/images/609bb0ddc3467logo.png" alt="logo" />
@@ -110,7 +110,7 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
   }, []);
 
   return (
-    <Header className={className || "header-light"} isScrolled={isScrolled}>
+    <Header  isScrolled={isScrolled}>
       <DesktopNavLinks css={collapseBreakpointCss.desktopNavLinks}>
         {logoLink}
         {links}

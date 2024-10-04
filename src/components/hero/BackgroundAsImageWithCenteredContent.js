@@ -80,15 +80,15 @@ const FullWidthCarousel = ({ refs }) => {
 
   const navLinks = (
     <NavLinks key={1}>
-      <NavLink onClick={() => scrollToSection(refs.homeRef)} style={{ color: '#0ed1b2' }}>Home</NavLink>
-      <NavLink onClick={() => scrollToSection(refs.projectRef)}>Projects</NavLink>
-      <NavLink onClick={() => scrollToSection(refs.EqpRef)}>Equipments</NavLink>
-      <NavLink onClick={() => scrollToSection(refs.TeamRef)}>Team</NavLink>
-      <NavLink onClick={() => scrollToSection(refs.CareerRef)}>Careers</NavLink>
-      <NavLink onClick={() => scrollToSection(refs.ContactRef)}>Contact Us</NavLink>
+      <NavLink style={{ color: '#0ed1b2' }}>Home</NavLink>
+      <NavLink onClick={() => scrollToSection(refs.projectRef)} style={{ color: 'black' }}>Projects</NavLink>
+      <NavLink onClick={() => scrollToSection(refs.EqpRef)} style={{ color: 'black' }}>Equipments</NavLink>
+      <NavLink onClick={() => scrollToSection(refs.TeamRef)} style={{ color: 'black' }}>Team</NavLink>
+      <NavLink onClick={() => scrollToSection(refs.CareerRef)} style={{ color: 'black' }}>Careers</NavLink>
+      <NavLink onClick={() => scrollToSection(refs.ContactRef)} style={{ color: 'black' }}>Contact Us</NavLink>
     </NavLinks>
   );
-
+  
   return (
     <>
       <Slider ref={setSliderRef} {...settings}>

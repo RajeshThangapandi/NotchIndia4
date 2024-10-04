@@ -22,12 +22,8 @@ const ThreeColCenteredStatsPrimaryBackground = lazy(() => import("components/fea
 
 // Keyframes for the bouncing effect
 const bounce = keyframes`
-  0%, 80%, 100% {
-    transform: scale(0);
-  } 
-  40% {
-    transform: scale(1);
-  }
+  0%, 80%, 100% { transform: scale(0); } 
+  40% { transform: scale(1); }
 `;
 
 // Styled components
@@ -47,15 +43,9 @@ const Dot = styled.div`
   border-radius: 50%;
   background-color: ${(props) => props.color};
   animation: ${bounce} 1.4s infinite ease-in-out both;
-  &:nth-child(1) {
-    animation-delay: -0.32s;
-  }
-  &:nth-child(2) {
-    animation-delay: -0.16s;
-  }
-  &:nth-child(3) {
-    animation-delay: 0s;
-  }
+  &:nth-child(1) { animation-delay: -0.32s; }
+  &:nth-child(2) { animation-delay: -0.16s; }
+  &:nth-child(3) { animation-delay: 0s; }
 `;
 
 const TwoColumnContainer = styled.div`
@@ -63,6 +53,7 @@ const TwoColumnContainer = styled.div`
   max-width: 1200px;
   margin: 80px auto;
   gap: 40px;
+  
 `;
 
 const VideoColumn = styled.div`
@@ -88,19 +79,18 @@ const Description = styled.p`
 
 const LearnMoreButton = styled.button`
   ${tw`mt-8 text-gray-100 px-8 py-3 rounded-lg hover:bg-[#28b3b3] transition duration-300`}
-  background-color: #32c5d2; /* Custom background color */
+  background-color: #32c5d2;
   box-shadow: 0px 8px 16px rgba(37, 150, 190, 0.3);
 `;
 
 const StyledHeader = styled(Header)`
-  ${tw`fixed top-0 left-0 w-full bg-white transition-opacity duration-300 ease-in-out`}
-  opacity: ${(props) => (props.visible ? 1 : 0)};
-  pointer-events: ${(props) => (props.visible ? 'auto' : 'none')};
+  ${tw`fixed top-0 left-0 w-full transition-opacity duration-300 ease-in-out`}
+  ${({ isScrolled }) => isScrolled && tw`bg-white`} /* Add styles when scrolled */
 `;
 
 const MainContent = styled.div`
-  background-color: #ffffff; /* Set background color to white */
-  padding-top: 100px; /* Adjust for the height of the fixed header */
+  background-color: #ffffff;
+  padding-top: 100px; 
 `;
 
 // Custom Loader component
@@ -108,71 +98,56 @@ const Loader = () => {
   return (
     <FullPageLoader>
       <DotContainer>
-        <Dot color="#ff6057" />  {/* Red Dot */}
-        <Dot color="#febc2e" />  {/* Green Dot */}
-        <Dot color="#2ec843" />  {/* Blue Dot */}
+        <Dot color="#ff6057" />
+        <Dot color="#febc2e" />
+        <Dot color="#2ec843" />
       </DotContainer>
     </FullPageLoader>
   );
 };
 
-// Main Component
 const MainComponent = () => {
   const [loading, setLoading] = useState(true);
-  const [headerVisible, setHeaderVisible] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(() => {
+    // Retrieve the scroll state from localStorage
+    return localStorage.getItem('isScrolled') === 'true';
+  });
+
   const homeRef = useRef(null);
-  const projectRef = useRef(null);
-  const EqpRef = useRef(null);
-  const TeamRef = useRef(null);
-  const CareerRef = useRef(null);
-  const ContactRef = useRef(null);
-  const videoRef = useRef(null); // Ref for the video element
+  const videoRef = useRef(null);
 
-  const scrollToSection = (elementRef) => {
-    if (elementRef && elementRef.current) {
-      window.scrollTo({
-        top: elementRef.current.offsetTop,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  const handleWatchVideo = () => {
-    if (videoRef.current) {
-      videoRef.current.play(); // Play the video
-      if (videoRef.current.requestFullscreen) {
-        videoRef.current.requestFullscreen(); // Enter full-screen mode
-      } else if (videoRef.current.webkitRequestFullscreen) { // Safari
-        videoRef.current.webkitRequestFullscreen();
-      } else if (videoRef.current.msRequestFullscreen) { // IE11
-        videoRef.current.msRequestFullscreen();
-      }
-    }
+  const handleScroll = () => {
+    const isCurrentlyScrolled = window.scrollY > 50; // Change this threshold as needed
+    setIsScrolled(isCurrentlyScrolled);
+    localStorage.setItem('isScrolled', isCurrentlyScrolled); // Store the scroll state
   };
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2000); // 2 seconds loading time
+    }, 2000);
 
-    return () => clearTimeout(timer);
-  }, []);
+    window.addEventListener('scroll', handleScroll); // Add scroll event listener
+    handleScroll(); // Check scroll position on component mount
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      if (scrollY > 100) { // Adjust this value as needed
-        setHeaderVisible(true);
-      } else {
-        setHeaderVisible(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(timer);
+      window.removeEventListener('scroll', handleScroll); // Clean up listener
     };
   }, []);
+
+  const handleWatchVideo = () => {
+    if (videoRef.current) {
+      videoRef.current.play();
+      if (videoRef.current.requestFullscreen) {
+        videoRef.current.requestFullscreen();
+      } else if (videoRef.current.webkitRequestFullscreen) {
+        videoRef.current.webkitRequestFullscreen();
+      } else if (videoRef.current.msRequestFullscreen) {
+        videoRef.current.msRequestFullscreen();
+      }
+    }
+  };
 
   return (
     <>
@@ -182,12 +157,13 @@ const MainComponent = () => {
         <Suspense fallback={<Loader />}>
           <AnimationRevealPage>
             <div ref={homeRef}>
-              <HeroSection/>
-              <StyledHeader visible={headerVisible} />
+              <HeroSection />
+
+              {/* <StyledHeader isScrolled={isScrolled} /> Pass isScrolled prop */}
             </div>
-        
+
             <MainContent>
-              <Hero refs={{ homeRef, projectRef, EqpRef, ContactRef, CareerRef, TeamRef }} /> 
+              <Hero refs={{ homeRef }} />
 
               {/* The "About" Section */}
               <div>
@@ -215,37 +191,21 @@ const MainComponent = () => {
 
               {/* Other Sections */}
               <div>
-                <MainFeature ref={homeRef} subheading={<span>Since 2014</span>} heading="25 Years of Excellence" />
-              </div>
-              <TrendingCard />
-              <div ref={projectRef}>
-                <TabCardGrid heading="Our Projects" />
-              </div>
-
-              <div ref={EqpRef}>
-                <MainFeature2 heading="Our Equipments" />
-              </div>
-
-              <div ref={TeamRef}>
+                <MainFeature ref={homeRef} subheading={<span>Since 2014</span>} heading="25 Years of Award-Winning Work" />
+                <TabCardGrid />
                 <ProfileThreeColGrid />
-              </div>
-
-              <ThreeColCenteredStatsPrimaryBackground />
-
-              <div ref={CareerRef}>
                 <ContactUsForm />
+                <Footer />
               </div>
 
-              <div ref={ContactRef}><SimpleSubscribeNewsletter/></div>
-              
-              <Footer />
-            
               <BackToTop />
             </MainContent>
           </AnimationRevealPage>
         </Suspense>
       )}
     </>
+  
+
   );
 };
 
