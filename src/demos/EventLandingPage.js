@@ -98,6 +98,11 @@ const StyledHeader = styled(Header)`
   pointer-events: ${(props) => (props.visible ? 'auto' : 'none')};
 `;
 
+const MainContent = styled.div`
+  background-color: #ffffff; /* Set background color to white */
+  padding-top: 100px; /* Adjust for the height of the fixed header */
+`;
+
 // Custom Loader component
 const Loader = () => {
   return (
@@ -181,60 +186,62 @@ const MainComponent = () => {
               <StyledHeader visible={headerVisible} />
             </div>
         
-            <Hero refs={{ homeRef, projectRef, EqpRef, ContactRef, CareerRef, TeamRef }} /> 
+            <MainContent>
+              <Hero refs={{ homeRef, projectRef, EqpRef, ContactRef, CareerRef, TeamRef }} /> 
 
-            {/* The "About" Section */}
-            <div>
-              <TwoColumnContainer>
-                <VideoColumn>
-                  <StyledVideo ref={videoRef} controls autoPlay muted loop>
-                    <source src={sampleVideo} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </StyledVideo>
-                </VideoColumn>
-                <ContentColumn>
-                  <h2 tw="text-4xl font-bold text-gray-900 leading-snug">
-                    Captivating <span tw="bg-primary-500 text-gray-100 px-4 transform -skew-x-12 inline-block">Video Experience</span>
-                  </h2>
-                  <Description>
-                    Dive into this amazing visual journey with our latest projects.
-                    Explore cutting-edge designs, technology, and solutions.
-                  </Description>
-                  <LearnMoreButton onClick={handleWatchVideo}>
-                    Watch Video
-                  </LearnMoreButton>
-                </ContentColumn>
-              </TwoColumnContainer>
-            </div>
+              {/* The "About" Section */}
+              <div>
+                <TwoColumnContainer>
+                  <VideoColumn>
+                    <StyledVideo ref={videoRef} controls autoPlay muted loop>
+                      <source src={sampleVideo} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </StyledVideo>
+                  </VideoColumn>
+                  <ContentColumn>
+                    <h2 tw="text-4xl font-bold text-gray-900 leading-snug">
+                      Captivating <span tw="bg-primary-500 text-gray-100 px-4 transform -skew-x-12 inline-block">Video Experience</span>
+                    </h2>
+                    <Description>
+                      Dive into this amazing visual journey with our latest projects.
+                      Explore cutting-edge designs, technology, and solutions.
+                    </Description>
+                    <LearnMoreButton onClick={handleWatchVideo}>
+                      Watch Video
+                    </LearnMoreButton>
+                  </ContentColumn>
+                </TwoColumnContainer>
+              </div>
 
-            {/* Other Sections */}
-            <div>
-              <MainFeature ref={homeRef} subheading={<span>Since 2014</span>} heading="25 Years of Excellence" />
-            </div>
-            <TrendingCard />
-            <div ref={projectRef}>
-              <TabCardGrid heading="Our Projects" />
-            </div>
+              {/* Other Sections */}
+              <div>
+                <MainFeature ref={homeRef} subheading={<span>Since 2014</span>} heading="25 Years of Excellence" />
+              </div>
+              <TrendingCard />
+              <div ref={projectRef}>
+                <TabCardGrid heading="Our Projects" />
+              </div>
 
-            <div ref={EqpRef}>
-              <MainFeature2 heading="Our Equipments" />
-            </div>
+              <div ref={EqpRef}>
+                <MainFeature2 heading="Our Equipments" />
+              </div>
 
-            <div ref={TeamRef}>
-              <ProfileThreeColGrid />
-            </div>
+              <div ref={TeamRef}>
+                <ProfileThreeColGrid />
+              </div>
 
-            <ThreeColCenteredStatsPrimaryBackground />
+              <ThreeColCenteredStatsPrimaryBackground />
 
-            <div ref={CareerRef}>
-              <ContactUsForm />
-            </div>
+              <div ref={CareerRef}>
+                <ContactUsForm />
+              </div>
 
-            <div ref={ContactRef}><SimpleSubscribeNewsletter/></div>
+              <div ref={ContactRef}><SimpleSubscribeNewsletter/></div>
+              
+              <Footer />
             
-            <Footer />
-          
-            <BackToTop />
+              <BackToTop />
+            </MainContent>
           </AnimationRevealPage>
         </Suspense>
       )}
