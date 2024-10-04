@@ -3,8 +3,6 @@ import styled, { keyframes } from "styled-components";
 import tw from "twin.macro";
 import sampleVideo from '../images/video.mp4';
 import SimpleSubscribeNewsletter from "components/forms/SimpleSubscribeNewsletter";
-import HeroSection from "components/headers/HeroSection";
-import Navbar from "components/headers/NavSection";
 
 
 // Lazy load non-critical components
@@ -88,11 +86,9 @@ const Description = styled.p`
 `;
 
 const LearnMoreButton = styled.button`
-  ${tw`mt-8 text-gray-100 px-8 py-3 rounded-lg hover:bg-[#28b3b3] transition duration-300`}
-  background-color: #32c5d2; /* Custom background color */
+  ${tw`mt-8 bg-primary-500 text-gray-100 px-8 py-3 rounded-lg hover:bg-primary-700 transition duration-300`}
   box-shadow: 0px 8px 16px rgba(37, 150, 190, 0.3);
 `;
-
 
 const StyledHeader = styled(Header)`
   ${tw`fixed top-0 left-0 w-full bg-white bg-opacity-75 backdrop-blur-md z-50`}
@@ -114,7 +110,7 @@ const Loader = () => {
 // Main Component
 const MainComponent = () => {
   const [loading, setLoading] = useState(true);
-  const homeRef = useRef(null);
+  const aboutRef = useRef(null);
   const projectRef = useRef(null);
   const EqpRef = useRef(null);
   const TeamRef = useRef(null);
@@ -160,16 +156,9 @@ const MainComponent = () => {
       ) : (
         <Suspense fallback={<Loader />}>
           <AnimationRevealPage>
-          {/* <Navbar/> */}
-         
-           <Hero refs={{ homeRef, projectRef, EqpRef, ContactRef, CareerRef, TeamRef }} /> 
+            <StyledHeader />
+            <Hero refs={{ aboutRef, projectRef, EqpRef, ContactRef, CareerRef, TeamRef }} />
 
-           <div ref={homeRef}>
-          <HeroSection/>
-          {/* <StyledHeader  /> */}
-          </div>
-        
-           
             {/* The "About" Section */}
             <div>
               <TwoColumnContainer>
@@ -195,8 +184,8 @@ const MainComponent = () => {
             </div>
 
             {/* Other Sections */}
-            <div >
-              <MainFeature subheading={<span>Since 2014</span>} heading="25 Years of Excellence" />
+            <div ref={aboutRef}>
+              <MainFeature ref={aboutRef} subheading={<span>Since 2014</span>} heading="25 Years of Excellence" />
             </div>
             <TrendingCard />
             <div ref={projectRef}>
@@ -217,9 +206,7 @@ const MainComponent = () => {
               <ContactUsForm />
             </div>
 
-            <div ref={ContactRef}>
-              <SimpleSubscribeNewsletter/>
-              </div>
+            <div ref={ContactRef}><SimpleSubscribeNewsletter/></div>
             
             <Footer />
           
