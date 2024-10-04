@@ -79,7 +79,7 @@ const FullWidthCarousel = ({ refs }) => {
 
   const navLinks = (
     <NavLinks key={1}>
-      <NavLink onClick={() => scrollToSection(refs.aboutRef)} style={{ color: 'rgb(37, 150, 190)' }}>About</NavLink>
+      <NavLink onClick={() => scrollToSection(refs.homeRef)} style={{ color: 'rgb(37, 150, 190)' }}>Home</NavLink>
       <NavLink onClick={() => scrollToSection(refs.projectRef)}>Projects</NavLink>
       <NavLink onClick={() => scrollToSection(refs.EqpRef)}>Equipments</NavLink>
       <NavLink onClick={() => scrollToSection(refs.TeamRef)}>Team</NavLink>
@@ -91,19 +91,19 @@ const FullWidthCarousel = ({ refs }) => {
   return (
     <>
       <Slider ref={setSliderRef} {...settings}>
-        {imageUrls.map((imageUrl, index) => (
+        {/* {imageUrls.map((imageUrl, index) => (
           <BackgroundImage key={index} imageUrl={imageUrl}>
-            <OpacityOverlay /> {/* Overlay on the image */}
+            <OpacityOverlay /> 
             <IconContainer>
               <Icon onClick={() => sliderRef?.slickPrev()}>
-                <MdArrowBack size={24} /> {/* Material Design Left Arrow */}
+                <MdArrowBack size={24} /> 
               </Icon>
               <Icon onClick={() => sliderRef?.slickNext()}>
-                <MdArrowForward size={24} /> {/* Material Design Right Arrow */}
+                <MdArrowForward size={24} /> 
               </Icon>
             </IconContainer>
           </BackgroundImage>
-        ))}
+        ))} */}
       </Slider>
       {/* Always render the navbar, but toggle its visibility with CSS */}
       <StyledHeader links={navLinks} style={{ display: navbarVisible ? 'block' : 'none' }} />

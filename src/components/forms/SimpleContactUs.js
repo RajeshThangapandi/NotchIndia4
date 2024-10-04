@@ -7,21 +7,30 @@ import emailjs from "emailjs-com"; // Import EmailJS
 const Container = tw.div`relative`;
 const Content = tw.div`max-w-screen-xl mx-auto py-20 lg:py-24`;
 const FormContainer = styled.div`
-  ${tw`p-10 sm:p-12 md:p-16 bg-primary-500 text-gray-100 rounded-lg relative`}
+  ${tw`p-10 sm:p-12 md:p-16 bg-gradient-to-r from-teal-400 via-blue-500 to-indigo-600 text-black rounded-lg relative`}
+  
   form {
     ${tw`mt-4`}
   }
+  
   h2 {
-    ${tw`text-3xl sm:text-4xl font-bold`}
+    ${tw`text-3xl sm:text-4xl font-bold text-black`} /* Text color set to black */
   }
+  
   input, textarea {
-    ${tw`w-full bg-transparent text-gray-100 text-base font-medium tracking-wide border-b-2 py-2 text-gray-100 hocus:border-pink-400 focus:outline-none transition duration-200`};
-
+    ${tw`w-full bg-transparent text-black text-base font-medium tracking-wide border-b-2 py-2 hocus:border-teal-300 focus:outline-none transition duration-200`}; /* Text and background transparent */
+    
     ::placeholder {
-      ${tw`text-gray-500`}
+      ${tw`text-teal-300`} /* Placeholder styled to match gradient */
+    }
+    
+    &:focus::placeholder {
+      ${tw`text-transparent`} /* Placeholder disappears on focus */
     }
   }
 `;
+
+
 
 const TwoColumn = tw.div`flex flex-col sm:flex-row justify-between`;
 const Column = tw.div`sm:w-5/12 flex flex-col`;
@@ -97,7 +106,7 @@ export default () => {
                       id="name-input"
                       type="text"
                       name="name"
-                      placeholder="E.g. John Doe"
+                      
                       value={formData.name}
                       onChange={handleChange}
                       required
@@ -109,7 +118,7 @@ export default () => {
                       id="email-input"
                       type="email"
                       name="email"
-                      placeholder="E.g. john@mail.com"
+                     
                       value={formData.email}
                       onChange={handleChange}
                       required
@@ -122,7 +131,7 @@ export default () => {
                     <TextArea
                       id="message-input"
                       name="message"
-                      placeholder="E.g. Details about your event"
+                     
                       value={formData.message}
                       onChange={handleChange}
                       required
@@ -134,7 +143,7 @@ export default () => {
                       id="resume-input"
                       type="text"
                       name="resumeLink"
-                      placeholder="Paste your Google Drive link here"
+                     
                       value={formData.resumeLink}
                       onChange={handleChange}
                       required

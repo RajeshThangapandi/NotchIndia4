@@ -97,7 +97,7 @@ export const DesktopNavLinks = tw.nav`
 export default ({ roundedHeaderButton = false, logoLink, links, className, collapseBreakpointClass = "md" }) => {
   const defaultLinks = [
     <NavLinks key={1}>
-      <NavLink onClick={() => scrollToSection(homeRef)} style={{ color: 'rgb(37, 150, 190)' }}>About</NavLink>
+      <NavLink onClick={() => scrollToSection(homeRef)} style={{ color: 'rgb(37, 150, 190)' }}>Home</NavLink>
       <NavLink href="/#">Blog</NavLink>
       <NavLink href="/#">Pricing</NavLink>
       <NavLink href="/#">Contact Us</NavLink>

@@ -1,0 +1,61 @@
+/* Navbar.css */
+
+/* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif; /* Set your preferred font */
+  }
+  
+  /* Navbar styles */
+  .navbar {
+    position: fixed; /* Keep it fixed at the top */
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px; /* Set your desired height */
+    background: transparent; /* Fully transparent background */
+    display: flex;
+    align-items: center;
+    padding: 0 20px; /* Horizontal padding */
+    z-index: 1000; /* Ensure it sits above other elements */
+  }
+  
+  /* Navbar container */
+  .navbar-container {
+    display: flex;
+    justify-content: space-between; /* Space between logo and links */
+    width: 100%;
+  }
+  
+  /* Logo styles */
+  .logo {
+    color: #fff; /* Change to white or your preferred color */
+    font-size: 24px; /* Adjust size as needed */
+  }
+  
+  /* Navigation links */
+  .nav-links {
+    list-style: none; /* Remove bullets */
+    display: flex; /* Display links in a row */
+  }
+  
+  /* Link styles */
+  .nav-links li {
+    margin-left: 20px; /* Space between links */
+  }
+  
+  .nav-links a {
+    text-decoration: none; /* Remove underline */
+    color: #fff; /* Change to white or your preferred color */
+    transition: color 0.3s; /* Smooth color transition */
+  }
+  
+  .nav-links a:hover {
+    color: #007BFF; /* Change color on hover */
+  }
+  

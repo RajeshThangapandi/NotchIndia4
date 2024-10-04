@@ -7,13 +7,10 @@ import { PrimaryButton as PrimaryButtonBase } from "../../components/misc/Button
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-import image1 from "../../images/1.png"
-
-import image2 from "../../images/2.png"
-
-import image3 from "../../images/3.png"
-
-import image4 from "../../images/4.png"
+import image1 from "../../images/1.png";
+import image2 from "../../images/2.png";
+import image3 from "../../images/3.png";
+import image4 from "../../images/4.png";
 
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24 items-center`;
@@ -24,18 +21,20 @@ const TextColumn = styled(Column)(props => [
   props.textOnLeft ? tw`md:mr-12 lg:mr-16 md:order-first` : tw`md:ml-12 lg:ml-16 md:order-last`
 ]);
 
-// Ensure consistent image size
 const Image = styled.img(props => [
-  tw`w-full h-64`,  // Fixed height
+  tw`w-full h-64`,  
   props.imageRounded && tw`rounded`,
   props.imageBorder && tw`border`,
   props.imageShadow && tw`shadow`,
-  `object-fit: cover;`,  // Ensures image covers container while keeping its aspect ratio
-  `object-position: center;`  // Ensures the image is centered
+  `object-fit: cover;`,  
+  `object-position: center;`  
 ]);
 
 const TextContent = tw.div`lg:py-8 text-center md:text-left`;
-const Subheading = tw(SubheadingBase)`text-center md:text-left`;
+const Subheading = styled(SubheadingBase)`
+  color: #32c5d2;  // Set custom color for Subheading only
+  ${tw`text-center md:text-left`}
+`;
 const Heading = tw(SectionHeading)`mt-4 font-black text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
 const Description = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-secondary-100`;
 
@@ -98,9 +97,10 @@ export default ({
   primaryButtonText = "Contact Us",
   primaryButtonUrl = "https://timerse.com",
   imageSrcs = [
-   image1,
-   image2,image3,image4
-
+    image1,
+    image2,
+    image3,
+    image4
   ],
   buttonRounded = true,
   imageRounded = true,
