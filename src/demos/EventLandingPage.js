@@ -6,7 +6,6 @@ import SimpleSubscribeNewsletter from "components/forms/SimpleSubscribeNewslette
 import HeroSection from "components/headers/HeroSection";
 import Navbar from "components/headers/NavSection";
 
-
 // Lazy load non-critical components
 const AnimationRevealPage = lazy(() => import("helpers/AnimationRevealPage"));
 const Hero = lazy(() => import("components/hero/BackgroundAsImageWithCenteredContent"));
@@ -93,9 +92,10 @@ const LearnMoreButton = styled.button`
   box-shadow: 0px 8px 16px rgba(37, 150, 190, 0.3);
 `;
 
-
 const StyledHeader = styled(Header)`
-  ${tw`fixed top-0 left-0 w-full bg-white bg-opacity-75 backdrop-blur-md z-50`}
+  ${tw`fixed top-0 left-0 w-full bg-white transition-opacity duration-300 ease-in-out`}
+  opacity: ${(props) => (props.visible ? 1 : 0)};
+  pointer-events: ${(props) => (props.visible ? 'auto' : 'none')};
 `;
 
 // Custom Loader component
@@ -114,13 +114,13 @@ const Loader = () => {
 // Main Component
 const MainComponent = () => {
   const [loading, setLoading] = useState(true);
+  const [headerVisible, setHeaderVisible] = useState(false);
   const homeRef = useRef(null);
   const projectRef = useRef(null);
   const EqpRef = useRef(null);
   const TeamRef = useRef(null);
   const CareerRef = useRef(null);
   const ContactRef = useRef(null);
-
   const videoRef = useRef(null); // Ref for the video element
 
   const scrollToSection = (elementRef) => {
@@ -153,6 +153,22 @@ const MainComponent = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      if (scrollY > 100) { // Adjust this value as needed
+        setHeaderVisible(true);
+      } else {
+        setHeaderVisible(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <>
       {loading ? (
@@ -160,14 +176,12 @@ const MainComponent = () => {
       ) : (
         <Suspense fallback={<Loader />}>
           <AnimationRevealPage>
-          {/* <Navbar/> */}
-          <div ref={homeRef}>
-          <HeroSection/>
-          <StyledHeader  />
-          </div>
+            <div ref={homeRef}>
+              <HeroSection/>
+              <StyledHeader visible={headerVisible} />
+            </div>
         
-           
-           <Hero refs={{ homeRef, projectRef, EqpRef, ContactRef, CareerRef, TeamRef }} /> 
+            <Hero refs={{ homeRef, projectRef, EqpRef, ContactRef, CareerRef, TeamRef }} /> 
 
             {/* The "About" Section */}
             <div>
@@ -194,7 +208,7 @@ const MainComponent = () => {
             </div>
 
             {/* Other Sections */}
-            <div >
+            <div>
               <MainFeature ref={homeRef} subheading={<span>Since 2014</span>} heading="25 Years of Excellence" />
             </div>
             <TrendingCard />

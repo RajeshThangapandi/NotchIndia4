@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import Slider from "react-slick"; // Import react-slick
-import Header, { NavLink, NavLinks } from "../headers/light.js";
+import Header, { NavLink, NavLinks } from "../headers/light.js"; // Assuming this is your Header component
 import { MdArrowBack, MdArrowForward } from 'react-icons/md'; // Importing Material Design icons for arrows
 
-// Styled Components for the Carousel
+// Styled Header without any background
 const StyledHeader = styled(Header)`
-  ${tw`fixed top-0 left-0 w-full bg-white bg-opacity-75 backdrop-blur-md z-50`}
+  ${tw`fixed top-0 left-0 w-full`} // Keep it fixed at the top
+  background: none; // No background color or transparent
   ${NavLink} {
     ${tw`text-gray-900 hover:border-gray-300 hover:text-gray-300`}
   }
@@ -79,7 +80,7 @@ const FullWidthCarousel = ({ refs }) => {
 
   const navLinks = (
     <NavLinks key={1}>
-      <NavLink onClick={() => scrollToSection(refs.homeRef)} style={{ color: 'rgb(37, 150, 190)' }}>Home</NavLink>
+      <NavLink onClick={() => scrollToSection(refs.homeRef)} style={{ color: '#0ed1b2' }}>Home</NavLink>
       <NavLink onClick={() => scrollToSection(refs.projectRef)}>Projects</NavLink>
       <NavLink onClick={() => scrollToSection(refs.EqpRef)}>Equipments</NavLink>
       <NavLink onClick={() => scrollToSection(refs.TeamRef)}>Team</NavLink>
@@ -91,6 +92,7 @@ const FullWidthCarousel = ({ refs }) => {
   return (
     <>
       <Slider ref={setSliderRef} {...settings}>
+        {/* Uncomment this section if you want to include the background images */}
         {/* {imageUrls.map((imageUrl, index) => (
           <BackgroundImage key={index} imageUrl={imageUrl}>
             <OpacityOverlay /> 
